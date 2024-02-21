@@ -108,23 +108,24 @@ class PostController extends Controller
         return redirect()->route('post.index')->with('success',  'post Deleted Permanently');
     }
 
-    public function uploadPhoto(Request $req){
-        $originial_name = $req->upload->getClientOriginalName();
-        $filename_org = pathinfo($originial_name , PATHINFO_FILENAME);
-        $ext = $req->upload->getClientOriginalExtension();
-        $filename = $filename_org . '_' . time() . '.' . $ext;
+    public function uploadPhoto(Request $request)
+    {
+        $original_name = $request->upload->getClientOriginalName();
+        $filename_org = pathinfo($original_name, PATHINFO_FILENAME);
+        $ext = $request->upload->getClientOriginalExtension();
+        $filename = $filename_org.'_'.time().'.'.$ext;
 
-        $req->upload->move(storage_path('app/public/blog/images' , $filename));
+        $request->upload->move(storage_path('app/public/blog/images'), $filename);
 
-        $CKEditorFuncNum = $req->input('CKEditorFuncNum');
+        $CKEditorFuncNum = $request->input('CKEditorFuncNum');
 
         $url = asset('storage/blog/images/'.$filename);
-        $message = "user photo uploaded";
-        $res = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum , `$url`, `$message`)<script>";
+        $message = "Your Photo Uploaded";
 
-        @header('Content-Type:text/html; charset=utf-8');
+        $res = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, `$url`, `$message`)</script>";
+        @header("Content-Type: text/html; charset=utf-8");
 
         echo $res;
+
     }
-    
 }
