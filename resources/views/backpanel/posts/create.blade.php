@@ -45,7 +45,7 @@
             </div>
 
             <div class="form-file-group">
-                <input type="file" name="" id="file-upload" class="feature-img-input" name="feature_image" onchange="previewFile(this)">
+                <input type="file" id="file-upload" class="feature-img-input" name="feature_image" onchange="previewFile(this)">
                 <p onclick="document.querySelector(`#file-upload`).click()">Drag Your File Here or Click this area to upload
                     <span class="material-symbols-outlined">
                         cloud_upload

@@ -14,9 +14,11 @@ class PostController extends Controller
      */
     public function index()
     {
+        $post = Post::all();
         return view('backpanel.posts.index')
-            ->with('posts', Post::all());
+            ->with('posts', Post::all());   
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -26,24 +28,29 @@ class PostController extends Controller
         $categories = Category::all();
         return view('backpanel.posts.create', compact('categories'));
     }
+    
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $data = [
+        $post = Post::create([
             'title'       => $request->title,
             'content'     => $request->content,
             'excerpt'     => $request->excerpt,
             'category_id' => $request->category_id,
             'user_id'     => 1,
             'status'      => $request->status,
-        ];
-        $post = Post::create($data);
+        ]);
+
+        if($request->hasFile('feature_image')){
+            $post->addMedia($request->feature_image)->toMediaCollection("feature_image");
+        }
 
         return redirect()->route('post.index')->with('success', $post->name . ' created successfully');
     }
+
 
     /**
      * Display the specified resource.
@@ -53,26 +60,44 @@ class PostController extends Controller
         //
     }
 
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Post $post, Request $req)
     {
-        return view('backpanel.posts.edit')->with('post', $post);
+        $categories = Category::all();
+
+        $multimedia = $post->getMedia('feature_image')->first();
+
+        return view('backpanel.posts.edit' , compact(['post' , 'categories' , 'multimedia']));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Post $post)
     {
-        $data = [
-            "name" => $request->name,
-        ];
 
-        $post->update($data);
+        $post->update([
+            'title'       => $request->title,
+            'content'     => $request->content,
+            'excerpt'     => $request->excerpt,
+            'category_id' => $request->category_id,
+            'user_id'     => 1,
+            'status'      => $request->status,
+        ]);
+
+        if($request->hasFile('feature_image')){
+            $post->media()->delete();
+            $post->addMedia($request->feature_image)
+                    ->toMediaCollection('feature_image');
+        }
+        
         return redirect()->route('post.index')->with('success', $post->name . ' updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -108,24 +133,24 @@ class PostController extends Controller
         return redirect()->route('post.index')->with('success',  'post Deleted Permanently');
     }
 
+
     public function uploadPhoto(Request $request)
     {
         $original_name = $request->upload->getClientOriginalName();
         $filename_org = pathinfo($original_name, PATHINFO_FILENAME);
         $ext = $request->upload->getClientOriginalExtension();
-        $filename = $filename_org.'_'.time().'.'.$ext;
+        $filename = $filename_org . '_' . time() . '.' . $ext;
 
         $request->upload->move(storage_path('app/public/blog/images'), $filename);
 
         $CKEditorFuncNum = $request->input('CKEditorFuncNum');
 
-        $url = asset('storage/blog/images/'.$filename);
+        $url = asset('storage/blog/images/' . $filename);
         $message = "Your Photo Uploaded";
 
         $res = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, `$url`, `$message`)</script>";
         @header("Content-Type: text/html; charset=utf-8");
 
         echo $res;
-
     }
 }

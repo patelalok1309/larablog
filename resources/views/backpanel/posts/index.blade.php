@@ -13,6 +13,7 @@
         <table class="table table-hover">
 
             <tr>
+                <th>Thumb</th>
                 <th>Title</th>
                 <th>Slug</th>
                 <th>Actions</th>
@@ -20,6 +21,9 @@
 
             @forelse ($posts as $post)
                 <tr>
+                    <td>
+                        <img src="{{ $post->url }}" alt="post thumbnail" class="img img-thumbnail" height="150  px" width="100px">
+                    </td>
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->slug }}</td>
 

@@ -55,7 +55,6 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            console.log($('#avatarUpdated').val());
 
             var avatarImgUrl = $('#previewImg').attr('src');
 
