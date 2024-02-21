@@ -52,7 +52,7 @@
     </div>
 @endsection
 
-@section('footer')
+@section('script')
     <script>
         $(document).ready(function() {
             console.log($('#avatarUpdated').val());

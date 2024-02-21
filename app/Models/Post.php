@@ -16,5 +16,11 @@ class Post extends Model
         'status',
         'excerpt',
         'user_id',
+        'category_id'
     ];
+
+    public function setTitleAttribute($value){
+        $this->attributes['title'] = $value;
+        $this->attributes['slug'] = str_slug($value);
+    }
 }

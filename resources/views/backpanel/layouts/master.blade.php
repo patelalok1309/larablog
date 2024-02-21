@@ -28,7 +28,8 @@
 
     </div>
 </div>
-@yield('footer')
+
+@yield('script')
 </body>
 
 </html>

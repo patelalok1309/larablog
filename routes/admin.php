@@ -37,3 +37,6 @@ Route::delete('/category/{category}/force-delete', [CategoryController::class, '
 
 // Post Routes
 Route::resource('/backpanel/post' , PostController::class);
+Route::get('/post/trashed', [PostController::class, 'trashedPost'])->name('post.trashed');
+Route::post('/post/{post}/restore', [PostController::class, 'restorePost'])->name('post.restore');
+Route::delete('/post/{post}/force-delete', [PostController::class, 'forceDeletePost'])->name('post.force.delete');
