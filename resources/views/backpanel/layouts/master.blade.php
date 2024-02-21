@@ -29,7 +29,7 @@
     </div>
 </div>
 
-@yield('script')
+@yield('scripts')
 </body>
 
 </html>

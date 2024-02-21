@@ -40,3 +40,4 @@ Route::resource('/backpanel/post' , PostController::class);
 Route::get('/post/trashed', [PostController::class, 'trashedPost'])->name('post.trashed');
 Route::post('/post/{post}/restore', [PostController::class, 'restorePost'])->name('post.restore');
 Route::delete('/post/{post}/force-delete', [PostController::class, 'forceDeletePost'])->name('post.force.delete');
+Route::post('/backpanel/post/upload' ,[PostController::class , 'uploadPhoto'])->name('post.upload');
