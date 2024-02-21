@@ -107,4 +107,24 @@ class PostController extends Controller
             ->forceDelete();
         return redirect()->route('post.index')->with('success',  'post Deleted Permanently');
     }
+
+    public function uploadPhoto(Request $req){
+        $originial_name = $req->upload->getClientOriginalName();
+        $filename_org = pathinfo($originial_name , PATHINFO_FILENAME);
+        $ext = $req->upload->getClientOriginalExtension();
+        $filename = $filename_org . '_' . time() . '.' . $ext;
+
+        $req->upload->move(storage_path('app/public/blog/images' , $filename));
+
+        $CKEditorFuncNum = $req->input('CKEditorFuncNum');
+
+        $url = asset('storage/blog/images/'.$filename);
+        $message = "user photo uploaded";
+        $res = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum , `$url`, `$message`)<script>";
+
+        @header('Content-Type:text/html; charset=utf-8');
+
+        echo $res;
+    }
+    
 }

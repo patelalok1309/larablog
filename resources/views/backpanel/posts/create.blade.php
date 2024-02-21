@@ -24,7 +24,7 @@
                 <label for='title' class='form-label'>Content </label>
                 <textarea name="content" id="content" cols="30" rows="100" class="form-control"
                     placeholder="Enter post content..."></textarea>
-            </div>  
+            </div>
 
             <div class='form-group'>
                 <label for='title' class='form-label'>Excerpt</label>
@@ -53,16 +53,12 @@
     </div>
 
     @section('scripts')
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
-    <script>
-        ClassicEditor
-                .create( document.querySelector( '#content' ) )
-                .then( editor => {
-                        console.log( editor );
-                } )
-                .catch( error => {
-                        console.error( error );
-                } );
-</script>
+        <script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>
+        <script>
+            CKEDITOR.replace('content' , {
+                filebrowserUploadUrl : "{{ route('post.upload' , ['_token' => csrf_token()])}}",
+                filebrowserUploadMethod: "form"
+            });
+        </script>
     @endsection
 @endsection
