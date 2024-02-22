@@ -16,16 +16,16 @@
                 <th>Thumb</th>
                 <th>Title</th>
                 <th>Slug</th>
+                <th>Status</th>
                 <th>Actions</th>
             </tr>
 
             @forelse ($posts as $post)
                 <tr>
-                    <td>
-                        <img src="{{ $post->url }}" alt="post thumbnail" class="img img-thumbnail" height="150  px" width="100px">
-                    </td>
+                    <td><img src="{{ $post->url }}" alt="post thumbnail" class="img img-thumbnail" height="150  px" width="100px"></td>
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->slug }}</td>
+                    <td>{{ $post->status }}</td>
 
                     <td class="d-flex justify-content-start align-items-center gap-2">
                         <a href="{{ route('post.edit', $post->id) }}" class="btn btn-warning btn-sm rounded">

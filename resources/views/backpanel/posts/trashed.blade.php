@@ -13,13 +13,15 @@
             <tr>
                 <th>Name</th>
                 <th>Slug</th>
+                <th>Status</th>
                 <th>Actions</th>
             </tr>
 
             @forelse ($posts as $post)
                 <tr>
-                    <td>{{ $post->name }}</td>
+                    <td>{{ $post->title }}</td>
                     <td>{{ $post->slug }}</td>
+                    <td>{{ $post->status }}</td>
 
                     <td class="d-flex justify-content-start align-items-center gap-2" >
                         <form action="{{ route('post.restore', $post) }}" method="POST" style="margin: 0px 5px ">

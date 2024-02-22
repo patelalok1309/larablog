@@ -39,4 +39,16 @@ class Post extends Model implements HasMedia
     public function getUrlAttribute(){
         return $this->getFirstMediaUrl('feature_image');
     }
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function comments(){
+        return $this->morphMany(Comment::class , 'commentable')->whereNull('parent_id')->latest();
+    }
 }

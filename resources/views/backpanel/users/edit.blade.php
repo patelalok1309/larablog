@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between flex-column">
         <h3 class="text-center">Update User</h3>
 
-        <form action="{{ route('user.update', ['id' => $user->id]) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('user.update', ['user' => $user]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class='form-group'>
@@ -54,25 +54,25 @@
 
 @section('scripts')
     <script>
-        $(document).ready(function() {
+        // $(document).ready(function() {
 
-            var avatarImgUrl = $('#previewImg').attr('src');
+        //     var avatarImgUrl = $('#previewImg').attr('src');
 
-            function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
+        //     function readURL(input) {
+        //         if (input.files && input.files[0]) {
+        //             var reader = new FileReader();
 
-                    reader.onload = function(e) {
-                        $('#previewImg').attr('src', e.target.result);
-                    }
+        //             reader.onload = function(e) {
+        //                 $('#previewImg').attr('src', e.target.result);
+        //             }
 
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-            $('#avatar').change(function() {
-                readURL(this);
-            })
+        //             reader.readAsDataURL(input.files[0]);
+        //         }
+        //     }
+        //     $('#avatar').change(function() {
+        //         readURL(this);
+        //     })
 
-        })
+        // })
     </script>
 @endsection

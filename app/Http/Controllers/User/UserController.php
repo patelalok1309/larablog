@@ -52,26 +52,32 @@ class UserController extends Controller
             ->with('role', $userRoles[0]);
     }
 
-    public function update(Request $req)
+    public function update(Request $req , User $user)
     {
-        $data = [
+        $user->update([
             "name" => $req->name,
             "email" => $req->email,
             "password" => $req->password,
-        ];
-        $user = User::find($req->id);
-        $user->syncRoles($req->role)->update($data);
-        $multimedia = $user->getMedia('user_avatar')->first();
+        ]);
+        $user->syncRoles($req->role);
 
-        if ($req->removeAvatar) {
-            if ($multimedia) {
-                $multimedia->delete();
-            }
-        } else {
-            if($req->avatar){
-                $user->addMedia($req->avatar)->toMediaCollection('user_avatar');
-            }
+        if($req->hasFile('avatar')){
+            $user->media()->delete();
+            $user->addMedia($req->avatar)
+                    ->toMediaCollection('user_avatar');
         }
+
+        // $multimedia = $user->getMedia('user_avatar')->first();
+
+        // if ($req->removeAvatar) {
+        //     if ($multimedia) {
+        //         $multimedia->delete();
+        //     }
+        // } else {
+        //     if($req->avatar){
+        //         $user->addMedia($req->avatar)->toMediaCollection('user_avatar');
+        //     }
+        // }
         return redirect()->route('user.index')->with('success', $req->name . ' updated successfully');
     }
 
