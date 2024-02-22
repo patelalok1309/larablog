@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Blog;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -17,5 +18,9 @@ class FrontController extends Controller
 
         $relatedPosts = Post::where( 'id' , '!=' , $post->id)->take(3)->get();
         return  view('blog.single-post', compact(['post' , 'relatedPosts']));
+    }
+
+    public function categoryWisePost(Category $category){
+        return view('blog.category-wise-post', compact('category'));
     }
 }

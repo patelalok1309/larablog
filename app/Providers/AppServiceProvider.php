@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,5 +25,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
         Paginator::useBootstrapFour();
+
+        // Categories globally shared to all views
+        View::share('categories', Category::all());
+
+        // Latest Post shared to all views
+        $latestPosts = Post::latest()->take(3)->get();
+        View::share('latestPosts' , $latestPosts);
     }
 }

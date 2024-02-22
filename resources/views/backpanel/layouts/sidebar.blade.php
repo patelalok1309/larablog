@@ -40,6 +40,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('tag.index')}}">
+                    <i class="material-icons">tags</i>
+                    <p>Tags</p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('post.index')}}">
                     <i class="material-icons">article</i>
                     <p>Posts</p>

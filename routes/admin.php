@@ -11,23 +11,30 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/backpanel', 'backpanel.dashboard.index')->name('backpanel.dashboard');
 
+
 // User Routes 
 Route::resource('/backpanel/user', UserController::class);
+
 
 // Role Routes
 Route::resource('/backpanel/role', RoleController::class);
 
+
 // Permission Routes
 Route::resource('/backpanel/permission', PermissionController::class);
+
 
 // Assign permissions view
 Route::get('/backpanel/role/{role}/assign-permission', [RoleController::class, 'assignPermissionView'])->name('role.assign.permission');
 
+
 // Store assigned permissions
 Route::post('/backpanel/role/{role}/assign-permission', [RoleController::class, 'assignPermission'])->name('role.store.permission');
 
+
 // Category Route
 Route::resource('/backpanel/category', CategoryController::class);
+
 
 // Trashed Categories Route
 Route::get('/category/trashed', [CategoryController::class, 'trashedCategory'])->name('category.trashed');

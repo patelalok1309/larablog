@@ -39,10 +39,11 @@ Route::get('/add-roles', function () {
 })->name('add.roles');
 
 
+
 Route::controller(FrontController::class)->group(function () {
     Route::get('/', 'allPost')->name('blog.home');
     Route::get('/{post:slug}' , 'singlePost')->name('single.post');
-
+    Route::get("/category/{category:slug}", 'categoryWisePost')->name('category-post');
 });
 
 Route::controller(CommentController::class)->group(function() {
