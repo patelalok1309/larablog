@@ -1,17 +1,17 @@
 @extends('backpanel.layouts.master')
 
 @section('content')
-    <a href="{{ route('category.index') }}" class="btn btn-primary"> All Categories</a>
+    <a href="{{ route('tag.index') }}" class="btn btn-primary"> All Tags</a>
     <div class="d-flex justify-content-between flex-column">
-        <h3 class="text-center">Update Category</h3>
+        <h3 class="text-center">Update Tag</h3>
 
-        <form action="{{ route('category.update', ['category' => $category->id]) }}" method="POST">
+        <form action="{{ route('tag.update', ['tag' => $tag->id]) }}" method="POST">
             @csrf
             @method('put')
             <div class='form-group'>
-                <label for='name' class='form-label'>Category name : </label>
+                <label for='name' class='form-label'>Tag name : </label>
                 <input type='text' name='name' id='name' class='form-control'
-                    placeholder='Enter category name ...' value="{{ $category->name }}" />
+                    placeholder='Enter tag name ...' value="{{ $tag->name }}" />
             </div>
 
             <div class="form-group">

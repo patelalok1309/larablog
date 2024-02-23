@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\User\CategoryController;
 use App\Http\Controllers\User\PermissionController;
 use App\Http\Controllers\User\PostController;
@@ -40,6 +41,17 @@ Route::resource('/backpanel/category', CategoryController::class);
 Route::get('/category/trashed', [CategoryController::class, 'trashedCategory'])->name('category.trashed');
 Route::post('/category/{category}/restore', [CategoryController::class, 'restoreCategory'])->name('category.restore');
 Route::delete('/category/{category}/force-delete', [CategoryController::class, 'forceDeleteCategory'])->name('category.force.delete');
+
+
+// Tags Route
+Route::resource('/backpanel/tag' , TagController::class);
+
+// Trashed Tags Route
+Route::get('/tag/trashed', [TagController::class, 'trashedTag'])->name('tag.trashed');
+Route::post('/tag/{tag}/restore', [TagController::class, 'restoreTag'])->name('tag.restore');
+Route::delete('/tag/{tag}/force-delete', [TagController::class, 'forceDeleteTag'])->name('tag.force.delete');
+
+
 
 
 // Post Routes

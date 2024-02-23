@@ -47,21 +47,25 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    
     protected $appends = ['avatar'];
 
+    
     public function getAvatarAttribute(){
        return  $this->getFirstMediaUrl('user_avatar');
     }
+    
 
     public function setPasswordAttribute($value){
         $this->attributes['password'] = Hash::make($value);
     }
 
-    //media method clear 
-    // public function clearMediaCollection(string $collectionName = 'default'): HasMedia
-    // {
-    //         //
-    // }
+
+    public function setNameAttribute($value){
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = str_slug($value);
+    }
+
 
     public function posts(){
         return $this->hasMany(Post::class);

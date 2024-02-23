@@ -8,30 +8,24 @@
                     <div class="text-box-inner">
                         <h4 class="dosis uppercase less-mar3">{{ $post->title }}</h4>
                         <br>
-                        <img src="{{ $post->url }}" alt="thumbnail" class="img"
-                            style="width:100%; margin-bottom:1rem;">
+                        <img src="{{ $post->url }}" alt="thumbnail" class="img" style="width:100%; margin-bottom:1rem;">
                         <br />
                         {!! $post->content !!}
-                        <br>
-                        <h4 class="dosis uppercase less-mar3"><a href="#">Aliquam ornare hendrerit augue</a>
-                        </h4>
                         <br />
-                        <ul class="iconlist dark">
-                            <li><i class="fa fa-check"></i> Sed massa tellus aliquam rhoncus venenatis quis. </li>
-                            <li><i class="fa fa-check"></i> Development dolor sit amet consectetur adipiscing elit
-                                Phasellus </li>
-                            <li><i class="fa fa-check"></i> Etiam dictum Nunc enim Sed massa tellus aliquam rhoncus
-                                venenatis</li>
-                            <li><i class="fa fa-check"></i> Magna eget scelerisque metus massa in neque sit
-                                consectetur </li>
-                        </ul>
-                        <br />
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse et justo. Praesent
-                            mattis commodo augue. Aliquam ornare hendrerit augue. Cras tellus. In pulvinar lectus a
-                            est. Curabitur eget orci. Cras laoreet ligula. Etiam sit amet dolor. Vestibulum ante
-                            ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam tellus
-                            diam, volutpat</p>
-                        <br />
+
+                        <div class="tag-box">
+                            Tags:
+                            @forelse ($post->tags as $tag)
+                                <a href="{{route('tag-post', [$tag->slug])}}" class="tag-link">{{ $tag->name }}</a>
+                            @empty
+                                <p>no tags</p>
+                            @endforelse
+                        </div>
+
+                        <div class="tag-box">
+                            <h2>check</h2>
+                            <a href="{{route('author-post', [$post->user->slug])}}" class="tag-link">{{ $post->user->name }}</a>
+                        </div>
                         <h4 class="dosis uppercase less-mar3"><a href="#">Share this article</a></h4>
                         <br />
                         <ul class="blog1-social-icons">
@@ -107,12 +101,12 @@
                                         <a class="btn btn-border yellow-green btn-small-2 " href="#comment-form"
                                             onclick="document.getElementById('comment_id').value = {{ $comment->id }}">Reply</a>
 
-                                       @forelse ($comment->replies as $reply)
-                                           @include('blog.partials._replies' , ['reply' => $reply])
-                                       @empty
-                                           <p>No replies on this comment</p>
-                                       @endforelse
-                                            
+                                        @forelse ($comment->replies as $reply)
+                                            @include('blog.partials._replies', ['reply' => $reply])
+                                        @empty
+                                            <p>No replies on this comment</p>
+                                        @endforelse
+
                                     </div>
                                 </div>
                             </div>
@@ -199,4 +193,22 @@
 
 @section('scripts')
     <script></script>
+@endsection
+
+
+@section('styles')
+<style>
+    .tag-box{
+        margin: 5px 5px 35px 0;
+    }
+
+    .tag-link{
+        background-color: #dbdc33;
+        padding: 6px;
+        color: #fff;
+        font-size: 1.125rem;
+        font-weight: bold;
+        border-radius: 15px;    
+    }
+</style>
 @endsection

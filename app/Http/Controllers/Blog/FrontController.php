@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Blog;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
@@ -22,5 +24,12 @@ class FrontController extends Controller
 
     public function categoryWisePost(Category $category){
         return view('blog.category-wise-post', compact('category'));
+    }
+    public function tagWisePost(Tag $tag){
+        return view('blog.tag-wise-post', compact('tag'));
+    }
+
+    public function authorWisePost(User $user){
+        return view('blog.author-wise-post', compact('user'));
     }
 }

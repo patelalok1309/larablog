@@ -3,12 +3,12 @@
 @section('content')
     @include('layouts.success')
 
-    <h2>All Categorys </h2>
-    <a href="{{ route('category.create') }}" class="btn btn-primary rounded"> Create Categories </a>
-    <a href="{{ route('category.trashed') }}" class="btn btn-danger rounded float-right">
+    <h2>All Tags </h2>
+    <a href="{{ route('tag.create') }}" class="btn btn-primary rounded"> Create Tags </a>
+    <a href="{{ route('tag.trashed')}}" class="btn btn-danger rounded float-right">
         <i class="material-icons">delete</i> trash
     </a>
-
+    {{-- {{ route('tag.trashed') }} --}}
     <div class="d-flex justify-content-between flex-column">
         <table class="table table-hover">
 
@@ -18,18 +18,18 @@
                 <th>Actions</th>
             </tr>
 
-            @forelse ($categories as $category)
+            @forelse ($tags as $tag)
                 <tr>
-                    <td>{{ $category->name }}</td>
-                    <td>{{ $category->slug }}</td>
+                    <td>{{ $tag->name }}</td>
+                    <td>{{ $tag->slug }}</td>
 
                     <td class="d-flex justify-content-start align-items-center gap-2">
-                        <a href="{{ route('category.edit', $category->id) }}" class="btn btn-warning btn-sm rounded">
+                        <a href="{{ route('tag.edit', $tag->id) }}" class="btn btn-warning btn-sm rounded">
                             <i class="material-icons">edit</i>
                             Edit
                         </a>
 
-                        <form action="{{ route('category.destroy', ['category' => $category->id]) }}" method="POST"
+                        <form action="{{ route('tag.destroy', ['tag' => $tag->id]) }}" method="POST"
                             style="margin-bottom: 0">
                             @csrf
                             @method('DELETE')
@@ -42,7 +42,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4">No Categorys found</td>
+                    <td colspan="4">No Tags found</td>
                 </tr>
             @endforelse
         </table>

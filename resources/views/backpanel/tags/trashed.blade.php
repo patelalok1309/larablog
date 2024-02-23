@@ -3,9 +3,9 @@
 @section('content')
     @include('layouts.success')
 
-    <h2>All Trashed Categories </h2>
-    <a href="{{ route('category.create') }}" class="btn btn-primary rounded"> Create Category </a>
-    <a href="{{ route('category.index') }}" class="btn btn-primary rounded float-right"> All Categories</a>
+    <h2>All Trashed Tags </h2>
+    <a href="{{ route('tag.create') }}" class="btn btn-primary rounded"> Create Tag </a>
+    <a href="{{ route('tag.index') }}" class="btn btn-primary rounded float-right"> All Tags</a>
 
     <div class="d-flex justify-content-between flex-column">
         <table class="table table-hover">
@@ -16,13 +16,13 @@
                 <th>Actions</th>
             </tr>
 
-            @forelse ($categories as $category)
+            @forelse ($tags as $tag)
                 <tr>
-                    <td>{{ $category->name }}</td>
-                    <td>{{ $category->slug }}</td>
+                    <td>{{ $tag->name }}</td>
+                    <td>{{ $tag->slug }}</td>
 
                     <td class="d-flex justify-content-start align-items-center gap-2" >
-                        <form action="{{ route('category.restore', $category) }}" method="POST" style="margin: 0px 5px ">
+                        <form action="{{ route('tag.restore', $tag) }}" method="POST" style="margin: 0px 5px ">
                             @csrf
                             <button type="submit" class="btn btn-warning btn-sm rounded">
                                 <i class="material-icons">restore</i>
@@ -30,7 +30,7 @@
                             </button>
                         </form>
 
-                        <form action="{{ route('category.force.delete', ['category' => $category->id]) }}" method="POST"
+                        <form action="{{ route('tag.force.delete', ['tag' => $tag->id]) }}" method="POST"
                             style="margin-bottom: 0">
                             @csrf
                             @method('DELETE')
@@ -43,7 +43,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4">No Categorys found</td>
+                    <td colspan="4">No Tags found</td>
                 </tr>
             @endforelse
         </table>

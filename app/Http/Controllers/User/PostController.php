@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -16,9 +17,9 @@ class PostController extends Controller
     {
         $post = Post::all();
         return view('backpanel.posts.index')
-            ->with('posts', Post::all());   
+            ->with('posts', Post::all());
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -28,7 +29,7 @@ class PostController extends Controller
         $categories = Category::all();
         return view('backpanel.posts.create', compact('categories'));
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -44,8 +45,24 @@ class PostController extends Controller
             'status'      => $request->status,
         ]);
 
-        if($request->hasFile('feature_image')){
+        if ($request->hasFile('feature_image')) {
             $post->addMedia($request->feature_image)->toMediaCollection("feature_image");
+        }
+
+        if ($request->has('tags')) {
+            $tags = explode(",", $request->tags);
+            $tags_id = [];
+
+            foreach ($tags as $tag) {
+                $tag_model = Tag::where('name', $tag)->first();
+                if ($tag_model) {
+                    array_push($tags_id, $tag_model->id);
+                } else {
+                    array_push($tags_id, (Tag::create(['name' =>  $tag]))->id);
+                }
+            }
+
+            $post->tags()->sync($tags_id);
         }
 
         return redirect()->route('post.index')->with('success', $post->name . ' created successfully');
@@ -67,10 +84,14 @@ class PostController extends Controller
     public function edit(Post $post, Request $req)
     {
         $categories = Category::all();
-
+        $tags = $post->tags;
+        $tags_names = "";
+        foreach($tags as $tag){
+            $tags_names = $tags_names.",".$tag->name;
+        }
         $multimedia = $post->getMedia('feature_image')->first();
 
-        return view('backpanel.posts.edit' , compact(['post' , 'categories' , 'multimedia']));
+        return view('backpanel.posts.edit', compact(['post', 'categories', 'multimedia','tags_names' ]));
     }
 
 
@@ -89,12 +110,28 @@ class PostController extends Controller
             'status'      => $request->status,
         ]);
 
-        if($request->hasFile('feature_image')){
+        if ($request->hasFile('feature_image')) {
             $post->media()->delete();
             $post->addMedia($request->feature_image)
-                    ->toMediaCollection('feature_image');
+                ->toMediaCollection('feature_image');
         }
-        
+
+        if ($request->has('tags')) {
+            $tags = explode(",", $request->tags);
+            $tags_id = [];
+
+            foreach ($tags as $tag) {
+                $tag_model = Tag::where('name', $tag)->first();
+                if ($tag_model) {
+                    array_push($tags_id, $tag_model->id);
+                } else {
+                    array_push($tags_id, (Tag::create(['name' =>  $tag]))->id);
+                }
+            }
+
+            $post->tags()->sync($tags_id);
+        }
+
         return redirect()->route('post.index')->with('success', $post->name . ' updated successfully');
     }
 

@@ -51,7 +51,7 @@
                 <div class="clearfix"></div>
                 <ul class="category-links">
                     @forelse ($categories as $category)
-                        <li><a href="{{ route('category-post', [$category->slug])}}">{{ $category->name }}</a></li>
+                        <li><a href="{{ route('category-post', [$category->slug]) }}">{{ $category->name }}</a></li>
                     @empty
                         <p> No Categories Available </p>
                     @endforelse
@@ -78,7 +78,7 @@
                             </h6>
                             <div class="post-info">
                                 <span>By {{ $post->user->name }} </span>
-                                <span>{{$post->created_at->diffForHumans()}}</span>
+                                <span>{{ $post->created_at->diffForHumans() }}</span>
                             </div>
                         </div>
                     </div>
@@ -95,14 +95,14 @@
                 <h5 class="uppercase dosis">Tags</h5>
                 <div class="clearfix"></div>
                 <ul class="tags">
-                    <li><a href="#">Animation</a></li>
-                    <li><a href="#">Art</a></li>
-                    <li><a href="#">UI Design</a></li>
-                    <li><a href="#">Photography</a></li>
-                    <li><a class="active" href="#">Design</a></li>
-                    <li><a href="#">Art</a></li>
-                    <li><a href="#">Responsive</a></li>
-                    <li><a href="#">Develop</a></li>
+                    @forelse ($sidebarTags as $sidebarTag)
+                        <li>
+                            <a href="{{ route('tag-post', [$sidebarTag->slug]) }}">
+                                {{ $sidebarTag->name }}
+                            </a>
+                        </li>
+                    @empty
+                    @endforelse
                 </ul>
             </div>
         </div>

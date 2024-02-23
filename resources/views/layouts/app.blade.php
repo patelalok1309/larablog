@@ -50,6 +50,8 @@
             color: white;
         }
     </style>
+
+    @yield('styles')
 </head>
 <body>
 <div class="site_wrapper">

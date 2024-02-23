@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -50,5 +51,10 @@ class Post extends Model implements HasMedia
 
     public function comments(){
         return $this->morphMany(Comment::class , 'commentable')->whereNull('parent_id')->latest();
+    }
+
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class , 'taggable')->withTimestamps();
     }
 }
