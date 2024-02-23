@@ -77,8 +77,13 @@
                                 <a href="{{ route('single.post', [$post->slug]) }}">{{ $post->title }}</a>
                             </h6>
                             <div class="post-info">
-                                <span>By {{ $post->user->name }} </span>
-                                <span>{{ $post->created_at->diffForHumans() }}</span>
+                                <span>
+                                    By
+                                    <a href="{{ route('author-post', [$post->user->slug]) }}">
+                                        {{ $post->user->name }}
+                                    </a>
+                                    {{ $post->created_at->diffForHumans() }}
+                                </span>
                             </div>
                         </div>
                     </div>

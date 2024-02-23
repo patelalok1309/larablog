@@ -15,6 +15,8 @@
                     <p>Dashboard</p>
                 </a>
             </li>
+
+            @role('admin')
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('user.index')}}">
                     <i class="material-icons">face</i>
@@ -33,6 +35,9 @@
                     <p>Permission</p>
                 </a>
             </li>
+            @endrole
+
+            @hasrole(['admin' ,'editor'])
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('category.index')}}">
                     <i class="material-icons">all_inbox</i>
@@ -45,6 +50,8 @@
                     <p>Tags</p>
                 </a>
             </li>
+            @endhasrole
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('post.index')}}">
                     <i class="material-icons">article</i>

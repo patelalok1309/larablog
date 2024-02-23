@@ -16,16 +16,12 @@
                         <div class="tag-box">
                             Tags:
                             @forelse ($post->tags as $tag)
-                                <a href="{{route('tag-post', [$tag->slug])}}" class="tag-link">{{ $tag->name }}</a>
+                                <a href="{{ route('tag-post', [$tag->slug]) }}" class="tag-link">{{ $tag->name }}</a>
                             @empty
                                 <p>no tags</p>
                             @endforelse
                         </div>
 
-                        <div class="tag-box">
-                            <h2>check</h2>
-                            <a href="{{route('author-post', [$post->user->slug])}}" class="tag-link">{{ $post->user->name }}</a>
-                        </div>
                         <h4 class="dosis uppercase less-mar3"><a href="#">Share this article</a></h4>
                         <br />
                         <ul class="blog1-social-icons">
@@ -70,7 +66,12 @@
                                     <a href="{{ route('single.post', [$relatedPost->slug]) }}">{{ $relatedPost->title }}</a>
                                 </h5>
                                 <div class="blog1-post-info">
-                                    <span>By {{ $relatedPost->user->name }}</span>
+                                    <span>
+                                        By
+                                        <a href="{{ route('author-post', [$post->user->slug]) }}">
+                                            {{ $relatedPost->user->name }}
+                                        </a>
+                                    </span>
                                     <span>{{ $relatedPost->created_at->diffForHumans() }}</span>
                                 </div>
                             </div>
@@ -197,18 +198,18 @@
 
 
 @section('styles')
-<style>
-    .tag-box{
-        margin: 5px 5px 35px 0;
-    }
+    <style>
+        .tag-box {
+            margin: 5px 5px 35px 0;
+        }
 
-    .tag-link{
-        background-color: #dbdc33;
-        padding: 6px;
-        color: #fff;
-        font-size: 1.125rem;
-        font-weight: bold;
-        border-radius: 15px;    
-    }
-</style>
+        .tag-link {
+            background-color: #dbdc33;
+            padding: 6px;
+            color: #fff;
+            font-size: 1.125rem;
+            font-weight: bold;
+            border-radius: 15px;
+        }
+    </style>
 @endsection

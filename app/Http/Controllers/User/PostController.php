@@ -41,7 +41,7 @@ class PostController extends Controller
             'content'     => $request->content,
             'excerpt'     => $request->excerpt,
             'category_id' => $request->category_id,
-            'user_id'     => 1,
+            'user_id'     => auth()->id(),
             'status'      => $request->status,
         ]);
 
@@ -106,7 +106,6 @@ class PostController extends Controller
             'content'     => $request->content,
             'excerpt'     => $request->excerpt,
             'category_id' => $request->category_id,
-            'user_id'     => 1,
             'status'      => $request->status,
         ]);
 

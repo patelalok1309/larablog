@@ -10,53 +10,60 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/backpanel', 'backpanel.dashboard.index')->name('backpanel.dashboard');
+Route::group(
+    [
+        'middleware' => ['auth'],
+        'prefix' => 'backpanel'
+    ],
+    function () {
+
+        Route::view('', 'backpanel.dashboard.index')->name('backpanel.dashboard');
+
+        Route::group(['middleware' => ['role:admin']], function () {
+
+            // User Routes 
+            Route::resource('/user', UserController::class);
 
 
-// User Routes 
-Route::resource('/backpanel/user', UserController::class);
+            // Role Routes
+            Route::resource('/role', RoleController::class);
 
 
-// Role Routes
-Route::resource('/backpanel/role', RoleController::class);
+            // Permission Routes
+            Route::resource('/permission', PermissionController::class);
 
 
-// Permission Routes
-Route::resource('/backpanel/permission', PermissionController::class);
+            // Assign permissions view
+            Route::get('/role/{role}/assign-permission', [RoleController::class, 'assignPermissionView'])->name('role.assign.permission');
 
 
-// Assign permissions view
-Route::get('/backpanel/role/{role}/assign-permission', [RoleController::class, 'assignPermissionView'])->name('role.assign.permission');
+            // Store assigned permissions
+            Route::post('/role/{role}/assign-permission', [RoleController::class, 'assignPermission'])->name('role.store.permission');
+        });
 
 
-// Store assigned permissions
-Route::post('/backpanel/role/{role}/assign-permission', [RoleController::class, 'assignPermission'])->name('role.store.permission');
+        Route::group(['middleware' => ['role'=>'admin|editor']], function () {
+
+            // Category Route
+            Route::resource('/category', CategoryController::class);
+            Route::get('/category/trashed', [CategoryController::class, 'trashedCategory'])->name('category.trashed');
+            Route::post('/category/{category}/restore', [CategoryController::class, 'restoreCategory'])->name('category.restore');
+            Route::delete('/category/{category}/force-delete', [CategoryController::class, 'forceDeleteCategory'])->name('category.force.delete');
 
 
-// Category Route
-Route::resource('/backpanel/category', CategoryController::class);
+            // Tags Route
+            Route::resource('/tag', TagController::class);
+            Route::get('/tag/trashed', [TagController::class, 'trashedTag'])->name('tag.trashed');
+            Route::post('/tag/{tag}/restore', [TagController::class, 'restoreTag'])->name('tag.restore');
+            Route::delete('/tag/{tag}/force-delete', [TagController::class, 'forceDeleteTag'])->name('tag.force.delete');
 
+        });
 
-// Trashed Categories Route
-Route::get('/category/trashed', [CategoryController::class, 'trashedCategory'])->name('category.trashed');
-Route::post('/category/{category}/restore', [CategoryController::class, 'restoreCategory'])->name('category.restore');
-Route::delete('/category/{category}/force-delete', [CategoryController::class, 'forceDeleteCategory'])->name('category.force.delete');
-
-
-// Tags Route
-Route::resource('/backpanel/tag' , TagController::class);
-
-// Trashed Tags Route
-Route::get('/tag/trashed', [TagController::class, 'trashedTag'])->name('tag.trashed');
-Route::post('/tag/{tag}/restore', [TagController::class, 'restoreTag'])->name('tag.restore');
-Route::delete('/tag/{tag}/force-delete', [TagController::class, 'forceDeleteTag'])->name('tag.force.delete');
-
-
-
-
-// Post Routes
-Route::resource('/backpanel/post' , PostController::class);
-Route::get('/post/trashed', [PostController::class, 'trashedPost'])->name('post.trashed');
-Route::post('/post/{post}/restore', [PostController::class, 'restorePost'])->name('post.restore');
-Route::delete('/post/{post}/force-delete', [PostController::class, 'forceDeletePost'])->name('post.force.delete');
-Route::post('/backpanel/post/upload' ,[PostController::class , 'uploadPhoto'])->name('post.upload');
+        // Post Routes
+        Route::resource('/post', PostController::class);
+        Route::get('/post/trashed', [PostController::class, 'trashedPost'])->name('post.trashed');
+        Route::post('/post/{post}/restore', [PostController::class, 'restorePost'])->name('post.restore');
+        Route::delete('/post/{post}/force-delete', [PostController::class, 'forceDeletePost'])->name('post.force.delete');
+        Route::post('/post/upload', [PostController::class, 'uploadPhoto'])->name('post.upload');
+    }
+);
