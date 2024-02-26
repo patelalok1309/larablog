@@ -1,19 +1,18 @@
 <div class="col-md-4">
     <div class="col-md-12 nopadding">
         <div class="blog1-sidebar-box">
-            <div class="image-holder"><img src="http://placehold.it/360x340" alt="" class="img-responsive" /></div>
+            <div class="image-holder"><img src="{{ getSiteOwnerAvatar() }}" alt="owner avatar" class="img-responsive" />
+            </div>
             <div class="text-box-inner">
                 <h5 class="uppercase dosis">About me</h5>
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse et justo.
-                    Praesent mattis commodo augue. </p>
+                <p>{{ getSiteOption('site_owner_bio') }}</p>
                 <br />
                 <div class="clearfix"></div>
                 <ul class="blog1-social-icons">
-                    <li><a href="https://twitter.com/codelayers"><i class="fa fa-twitter"></i></a>
-                    </li>
-                    <li><a href="https://www.facebook.com/codelayers"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a href="{{ getSiteOption('site_owner_social_links.twiiter')}}"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="{{ getSiteOption('site_owner_social_links.facebook')}}"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="{{ getSiteOption('site_owner_social_links.instagram')}}"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="{{ getSiteOption('site_owner_social_links.linkedin')}}"><i class="fa fa-linkedin"></i></a></li>
                 </ul>
             </div>
         </div>

@@ -1,13 +1,6 @@
 @extends('backpanel.layouts.master')
 
 @section('content')
-    {{-- @if (count($errors) > 0)
-        @foreach ($errors->all() as $error)
-            <div class="alert alert-danger">
-                {{ $error }}
-            </div>
-        @endforeach
-    @endif --}}
 
     <h2>All Users </h2>
     <a href="{{ route('user.index') }}" class="btn btn-primary"> All User</a>
