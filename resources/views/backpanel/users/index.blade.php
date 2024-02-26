@@ -28,7 +28,7 @@
                     </td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->roles[0]->name }}</td>
+                    <td>{{ $user->getRoleNames()->first() }}</td>
                     <td class="d-flex justify-content-start align-items-center gap-2">
 
                         <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning btn-sm rounded">

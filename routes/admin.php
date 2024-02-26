@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\User\CategoryController;
 use App\Http\Controllers\User\PermissionController;
@@ -18,12 +19,12 @@ Route::group(
     function () {
 
         Route::view('', 'backpanel.dashboard.index')->name('backpanel.dashboard');
-
+        
         Route::group(['middleware' => ['role:admin']], function () {
-
+            
             // User Routes 
             Route::resource('/user', UserController::class);
-
+            
 
             // Role Routes
             Route::resource('/role', RoleController::class);
@@ -42,7 +43,7 @@ Route::group(
         });
 
 
-        Route::group(['middleware' => ['role'=>'admin|editor']], function () {
+        Route::group(['middleware' => ['role' => 'admin|editor']], function () {
 
             // Category Route
             Route::resource('/category', CategoryController::class);
@@ -56,14 +57,20 @@ Route::group(
             Route::get('/tag/trashed', [TagController::class, 'trashedTag'])->name('tag.trashed');
             Route::post('/tag/{tag}/restore', [TagController::class, 'restoreTag'])->name('tag.restore');
             Route::delete('/tag/{tag}/force-delete', [TagController::class, 'forceDeleteTag'])->name('tag.force.delete');
-
         });
 
         // Post Routes
-        Route::resource('/post', PostController::class);
         Route::get('/post/trashed', [PostController::class, 'trashedPost'])->name('post.trashed');
         Route::post('/post/{post}/restore', [PostController::class, 'restorePost'])->name('post.restore');
         Route::delete('/post/{post}/force-delete', [PostController::class, 'forceDeletePost'])->name('post.force.delete');
+        Route::resource('/post', PostController::class);
         Route::post('/post/upload', [PostController::class, 'uploadPhoto'])->name('post.upload');
+
+        // Comments Routes
+        Route::get('/comments', [CommentController::class, 'index'])->name('comment.index');
+        Route::put('/comments/{comment}/approve' , [CommentController::class , 'approve'])->name('comment.approve');
+        Route::get('/comments/edit/{comment}', [CommentController::class, 'edit'])->name('comment.edit');
+        Route::put('/comments/update/{comment}', [CommentController::class, 'update'])->name('comment.update');
+        Route::delete('/comments/delete/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
     }
 );
