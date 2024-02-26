@@ -57,4 +57,5 @@ class Post extends Model implements HasMedia
     {
         return $this->morphToMany(Tag::class , 'taggable')->withTimestamps();
     }
+
 }

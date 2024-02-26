@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email');
             $table->mediumText('comment');
             $table->unsignedBigInteger('parent_id')->nullable();
+            $table->enum('status' , ['pending' , 'approve'])->default('pending');
             $table->timestamps();
         });
     }
