@@ -33,7 +33,7 @@ class CommentController extends Controller
     // Edit Comments view
     public function edit(Comment $comment)
     {
-        return view('backpanel.categories.edit', compact('comment'));
+        return view('backpanel.comments.edit', compact('comment'));
     }
 
     // Update Comments
