@@ -10,9 +10,8 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    //  Display a listing of the resource.
     public function index()
     {
         $post = Post::all();
@@ -21,9 +20,7 @@ class PostController extends Controller
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    //  Show the form for creating a new resource.
     public function create()
     {
         $categories = Category::all();
@@ -31,9 +28,7 @@ class PostController extends Controller
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    //  Store a newly created resource in storage.
     public function store(Request $request)
     {
         $post = Post::create([
@@ -50,6 +45,7 @@ class PostController extends Controller
         }
 
         if ($request->has('tags')) {
+
             $tags = explode(",", $request->tags);
             $tags_id = [];
 
@@ -61,7 +57,6 @@ class PostController extends Controller
                     array_push($tags_id, (Tag::create(['name' =>  $tag]))->id);
                 }
             }
-
             $post->tags()->sync($tags_id);
         }
 
@@ -69,37 +64,34 @@ class PostController extends Controller
     }
 
 
-    /**
-     * Display the specified resource.
-     */
+    // Display the specified resource.
     public function show(Post $post)
     {
         //
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Show the form for editing the specified resource.
     public function edit(Post $post, Request $req)
     {
+        $this->authorize('update', $post);
+
         $categories = Category::all();
         $tags = $post->tags;
         $tags_names = "";
-        foreach($tags as $tag){
-            $tags_names = $tags_names.",".$tag->name;
+        foreach ($tags as $tag) {
+            $tags_names = $tags_names . "," . $tag->name;
         }
         $multimedia = $post->getMedia('feature_image')->first();
 
-        return view('backpanel.posts.edit', compact(['post', 'categories', 'multimedia','tags_names' ]));
+        return view('backpanel.posts.edit', compact(['post', 'categories', 'multimedia', 'tags_names']));
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     */
+    //  Update the specified resource in storage.
     public function update(Request $request, Post $post)
     {
+        $this->authorize('update', $post);
 
         $post->update([
             'title'       => $request->title,
@@ -118,7 +110,6 @@ class PostController extends Controller
         if ($request->has('tags')) {
             $tags = explode(",", $request->tags);
             $tags_id = [];
-
             foreach ($tags as $tag) {
                 $tag_model = Tag::where('name', $tag)->first();
                 if ($tag_model) {
@@ -127,31 +118,30 @@ class PostController extends Controller
                     array_push($tags_id, (Tag::create(['name' =>  $tag]))->id);
                 }
             }
-
             $post->tags()->sync($tags_id);
         }
-
         return redirect()->route('post.index')->with('success', $post->name . ' updated successfully');
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    //  Remove the specified resource from storage.
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
         $post->update(['status' => 'draft']);
         $post->delete();
         return redirect()->route('post.index')->with('success', ' deleted successfully');
     }
 
 
+    // trashed post view
     public function trashedPost()
     {
         return view('backpanel.posts.trashed')->with('posts', Post::onlyTrashed()->get());
     }
 
 
+    // Restore Post
     public function restorePost($id)
     {
         $post = Post::withTrashed()
@@ -161,15 +151,17 @@ class PostController extends Controller
     }
 
 
+    // Force delete Post
     public function forceDeletePost($id)
     {
-        $post = Post::withTrashed()
-            ->where('id', $id)
-            ->forceDelete();
+        $post = Post::withTrashed()->find($id);
+        $this->authorize('delete', $post);
+        $post->forceDelete();
         return redirect()->route('post.index')->with('success',  'post Deleted Permanently');
     }
 
 
+    // Upload Photo/Images to serveer
     public function uploadPhoto(Request $request)
     {
         $original_name = $request->upload->getClientOriginalName();

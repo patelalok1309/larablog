@@ -1,0 +1,77 @@
+[33mcommit 518ec8981aff1037b2616f7119469fe8c80d43b9[m[33m ([m[1;36mHEAD -> [m[1;32mbeta[m[33m, [m[1;31morigin/beta[m[33m)[m
+Author: patelalok1309 <alokdholu10@gmail.com>
+Date:   Mon Feb 26 10:27:57 2024 +0530
+
+    added comment approvals
+
+[33mcommit f1932b44298e71f83f6bd071aa7524f4335592b7[m[33m ([m[1;32mmain[m[33m)[m
+Author: patelalok1309 <alokdholu10@gmail.com>
+Date:   Fri Feb 23 16:49:05 2024 +0530
+
+    added authentication middleware
+
+[33mcommit 13196366983e6913e0fa657b2a363a713ce5dfd7[m
+Author: patelalok1309 <alokdholu10@gmail.com>
+Date:   Fri Feb 23 15:08:25 2024 +0530
+
+    added tags in create and edit post page
+
+[33mcommit d5154ee6a604692f943d0ab3f73ee8b651436066[m
+Author: patelalok1309 <alokdholu10@gmail.com>
+Date:   Thu Feb 22 18:15:55 2024 +0530
+
+    added related posts to sidebar and added category wise posts
+
+[33mcommit 2cb0d3ac35da28ec0bcfa81da82b106b126c12db[m
+Author: patelalok1309 <alokdholu10@gmail.com>
+Date:   Thu Feb 22 16:55:21 2024 +0530
+
+    added comments and single-post section , fixed template errors
+
+[33mcommit f1dbd89b07190e7a007bbcd9ca5d41930a8e87e6[m
+Author: patelalok1309 <alokdholu10@gmail.com>
+Date:   Wed Feb 21 19:11:06 2024 +0530
+
+    added backup for database
+
+[33mcommit 6b8429a218bf2b5f3e939e67bc23f96645be07eb[m
+Author: patelalok1309 <alokdholu10@gmail.com>
+Date:   Wed Feb 21 19:09:34 2024 +0530
+
+    added front end templates
+
+[33mcommit fa266fe7bb68e76794576775e298bad7a3667361[m
+Author: patelalok1309 <alokdholu10@gmail.com>
+Date:   Wed Feb 21 18:08:50 2024 +0530
+
+    completed post update section with thumbnail & added thumbnails for posts
+
+[33mcommit 953793879290aeb86855a36f472152ed50da6198[m
+Author: patelalok1309 <alokdholu10@gmail.com>
+Date:   Wed Feb 21 15:36:04 2024 +0530
+
+    post feature image front end added
+
+[33mcommit e6c73cbc9feb7c912241d45c00de606fd837c1b4[m
+Author: patelalok1309 <alokdholu10@gmail.com>
+Date:   Wed Feb 21 14:31:20 2024 +0530
+
+    photo upload feature added
+
+[33mcommit 23d4e8b99bf819c134aac1c0a69a9a67444b0381[m
+Author: patelalok1309 <alokdholu10@gmail.com>
+Date:   Wed Feb 21 12:44:07 2024 +0530
+
+    adding ckeditor 5 image upload
+
+[33mcommit 76e832ea3c3da99a37aa67ec3f0f44f890433bdb[m
+Author: patelalok1309 <alokdholu10@gmail.com>
+Date:   Wed Feb 21 12:14:49 2024 +0530
+
+    posts section
+
+[33mcommit ace826d6920fde6725bcb9c8cffcb313f521f6b1[m
+Author: patelalok1309 <alokdholu10@gmail.com>
+Date:   Wed Feb 21 11:08:58 2024 +0530
+
+    initial commit

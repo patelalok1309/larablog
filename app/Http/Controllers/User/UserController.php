@@ -35,11 +35,12 @@ class UserController extends Controller
             "password" => $req->password
         ]);
         $user->addMedia($req->avatar)->toMediaCollection('user_avatar');
-        $user->assignRole($req->role);
+        $user->assignRole('author');
         return redirect()->route('user.index')->with('success', $req->name . ' user created successfully');
     }
 
-    public function show(string $id){
+    public function show(string $id)
+    {
         //
     }
 
@@ -52,7 +53,7 @@ class UserController extends Controller
             ->with('role', $userRoles[0]);
     }
 
-    public function update(Request $req , User $user)
+    public function update(Request $req, User $user)
     {
         $user->update([
             "name" => $req->name,
@@ -61,29 +62,34 @@ class UserController extends Controller
         ]);
         $user->syncRoles($req->role);
 
-        if($req->hasFile('avatar')){
+        if ($req->hasFile('avatar')) {
             $user->media()->delete();
             $user->addMedia($req->avatar)
-                    ->toMediaCollection('user_avatar');
+                ->toMediaCollection('user_avatar');
         }
 
-        // $multimedia = $user->getMedia('user_avatar')->first();
-
-        // if ($req->removeAvatar) {
-        //     if ($multimedia) {
-        //         $multimedia->delete();
-        //     }
-        // } else {
-        //     if($req->avatar){
-        //         $user->addMedia($req->avatar)->toMediaCollection('user_avatar');
-        //     }
-        // }
         return redirect()->route('user.index')->with('success', $req->name . ' updated successfully');
     }
 
     public function destroy($user)
     {
-        User::destroy($user);   
+        User::destroy($user);
         return redirect()->route('user.index')->with('success', 'User deleted successfully');
+    }
+
+    public function registerUser(){
+        return view('auth.register');
+    }
+
+
+    public function storeUser(Request $req){
+        $user = User::create([
+            "name" => $req->name,
+            "email" => $req->email,
+            "password" => $req->password
+        ]);
+        $user->addMedia($req->avatar)->toMediaCollection('user_avatar');
+        $user->assignRole('author');
+        return redirect()->route('user.index')->with('success', $req->name . ' user created successfully');
     }
 }

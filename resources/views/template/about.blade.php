@@ -473,7 +473,7 @@
 <script type="text/javascript" src="js/universal/jquery.js"></script> 
 <script src="js/bootstrap/bootstrap.min.js" type="text/javascript"></script> 
 <script src="js/jFlickrFeed/jflickrfeed.min.js"></script> 
-<script>
+{{-- <script>
 $('#basicuse').jflickrfeed({
 limit: 6,
 qstrings: {
@@ -484,7 +484,7 @@ itemTemplate:
 '<a href="{{image_b}}"><img src="{{image_s}}" alt="{{title}}" /></a>' +
 '</li>'
 });
-</script> 
+</script>  --}}
 <script src="js/mainmenu/customeUI.js"></script> 
 <script src="js/mainmenu/jquery.sticky.js"></script> 
 <script src="js/owl-carousel/owl.carousel.js"></script> 
