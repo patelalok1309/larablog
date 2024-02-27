@@ -85,8 +85,21 @@
 
                 <div class="topbar-right-items pull-right">
                     <ul class="toplist toppadding">
-                        <li class="lineright"><a href="#">Login</a></li>
-                        <li class="lineright"><a href="{{ route('register.new.user')}}">Register</a></li>
+                        @if (!auth()->user())
+                            <li class="lineright"><a href="/login">Login</a></li>
+                            <li class="lineright"><a href="{{ route('register.new.user') }}">Register</a></li>
+                        @else
+                            <li class="lineright">{{ auth()->user()->name }}</li>
+                            <li class="lineright">
+                                <form action="/logout" method="POST">
+                                    @csrf
+                                    <button type="submit"
+                                        style="border: none; background: transparent;cursor: pointer;">
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
+                        @endif
                         <li><a href="{{ getSiteOption('site_social_links.facebook') }}"><i
                                     class="fa fa-facebook"></i></a></li>
                         <li><a href="{{ getSiteOption('site_social_links.twitter') }}"><i
@@ -105,25 +118,27 @@
             <div class="container">
                 <div class="navbar yellow-green navbar-default yamm">
                     <div class="navbar-header">
-                        <button type="button" data-toggle="collapse" data-target="#navbar-collapse-grid" class="navbar-toggle">
+                        <button type="button" data-toggle="collapse" data-target="#navbar-collapse-grid"
+                            class="navbar-toggle">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
-                            </button>
-                                <a href="route('blog.home')" class="navbar-brand">
-                                    <img src="{{ getSiteLogo() }}" alt="logo" width="40px" style="display: inline-block"/>
-                                    <span style="font-size: 3rem">{{ getSiteOption('site_name') }}</span>
-                                </a>
+                        </button>
+                        <a href="{{route('blog.home')}}" class="navbar-brand">
+                            <img src="{{ getSiteLogo() }}" alt="logo" width="40px"
+                                style="display: inline-block" />
+                            <span style="font-size: 3rem">{{ getSiteOption('site_name') }}</span>
+                        </a>
                     </div>
                     <div id="navbar-collapse-grid" class="navbar-collapse collapse pull-right">
                         <ul class="nav yellow-green navbar-nav">
-                            <li> <a href="index.html" class="dropdown-toggle active">Home</a></li>
-                            <li> <a href="about.html" class="dropdown-toggle">About Me</a></li>
+                            <li> <a href="/" class="dropdown-toggle active">Home</a></li>
+                            <li> <a href="/" class="dropdown-toggle">About Me</a></li>
                             <li class="dropdown"> <a href="fullwidth-post.html" class="dropdown-toggle">Posts</a>
                                 <ul class="dropdown-menu five" role="menu">
-                                    <li> <a href="gallerypost.html">Gallery Post</a> </li>
-                                    <li> <a href="fullwidth-post.html">Full Width Post</a> </li>
-                                    <li> <a href="video-post.html">Video Post</a> </li>
+                                    <li> <a href="/">Gallery Post</a> </li>
+                                    <li> <a href="/">Full Width Post</a> </li>
+                                    <li> <a href="/">Video Post</a> </li>
                                     <li> <a class="active" href="index.html">Post with Sidebar</a></li>
                                 </ul>
                             </li>
