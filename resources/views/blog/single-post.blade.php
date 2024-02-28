@@ -88,29 +88,48 @@
 
 
                         @forelse ($post->comments as $comment)
-                            <div class="blog1-post-info-box">
-                                <div class="text-box border padding-3">
-                                    <div class="iconbox-medium left round overflow-hidden"><img
-                                            src="http://placehold.it/110x110" alt="" class="img-responsive" /></div>
-                                    <div class="text-box-right more-padding-2">
-                                        <h5 class="uppercase dosis less-mar2">{{ $comment->name }}</h5>
-                                        <div class="blog1-post-info">
-                                            <span>{{ $comment->created_at->diffForHumans() }}</span>
+                            @if ($comment->status == 'approve')
+                                <div class="blog1-post-info-box">
+                                    <div class="text-box border padding-3">
+                                        <div class="iconbox-medium left round overflow-hidden"><img
+                                                src="http://placehold.it/110x110" alt="" class="img-responsive" />
                                         </div>
-                                        <p class="paddtop1">{{ $comment->comment }} </p>
-                                        <br />
-                                        <a class="btn btn-border yellow-green btn-small-2 " href="#comment-form"
-                                            onclick="document.getElementById('comment_id').value = {{ $comment->id }}">Reply</a>
+                                        <div class="text-box-right more-padding-2">
+                                            <h5 class="uppercase dosis less-mar2">{{ $comment->name }}</h5>
+                                            <div class="blog1-post-info">
+                                                <span>{{ $comment->created_at->diffForHumans() }}</span>
+                                            </div>
+                                            <p class="paddtop1">{{ $comment->comment }} </p>
+                                            <br />
+                                            <a class="btn btn-border yellow-green btn-small-2 " href="#comment-form"
+                                                onclick="document.getElementById('comment_id').value = {{ $comment->id }}">Reply</a>
 
-                                        @forelse ($comment->replies as $reply)
-                                            @include('blog.partials._replies', ['reply' => $reply])
-                                        @empty
-                                            <p>No replies on this comment</p>
-                                        @endforelse
+                                            @forelse ($comment->replies as $reply)
+                                                @include('blog.partials._replies', ['reply' => $reply])
+                                            @empty
+                                                <p>No replies on this comment</p>
+                                            @endforelse
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="blog1-post-info-box">
+                                    <div class="text-box border padding-3">
+                                        <div class="iconbox-medium left round overflow-hidden"><img
+                                                src="http://placehold.it/110x110" alt="" class="img-responsive" />
+                                        </div>
+                                        <div class="text-box-right more-padding-2">
+                                            <h5 class="uppercase dosis less-mar2">{{ $comment->name }}</h5>
+                                            <div class="blog1-post-info">
+                                                <span>{{ $comment->created_at->diffForHumans() }}</span>
+                                            </div>
+                                            <p class="paddtop1" style="color:red;">comment approval is pending </p>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         @empty
                         @endforelse
 

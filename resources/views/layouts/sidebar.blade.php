@@ -9,10 +9,14 @@
                 <br />
                 <div class="clearfix"></div>
                 <ul class="blog1-social-icons">
-                    <li><a href="{{ getSiteOption('site_owner_social_links.twiiter')}}"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="{{ getSiteOption('site_owner_social_links.facebook')}}"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="{{ getSiteOption('site_owner_social_links.instagram')}}"><i class="fa fa-instagram"></i></a></li>
-                    <li><a href="{{ getSiteOption('site_owner_social_links.linkedin')}}"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a href="{{ getSiteOption('site_owner_social_links.twiiter') }}"><i
+                                class="fa fa-twitter"></i></a></li>
+                    <li><a href="{{ getSiteOption('site_owner_social_links.facebook') }}"><i
+                                class="fa fa-facebook"></i></a></li>
+                    <li><a href="{{ getSiteOption('site_owner_social_links.instagram') }}"><i
+                                class="fa fa-instagram"></i></a></li>
+                    <li><a href="{{ getSiteOption('site_owner_social_links.linkedin') }}"><i
+                                class="fa fa-linkedin"></i></a></li>
                 </ul>
             </div>
         </div>
@@ -24,24 +28,16 @@
             <div class="text-box-inner">
                 <h5 class="uppercase dosis">Search</h5>
                 <div class="clearfix"></div>
-                <input class="blog1-sidebar-serch_input" type="search" placeholder="Email Address">
-                <input name="" value="Submit" class="blog1-sidebar-serch-submit" type="submit">
+                <form action="{{ route('search.submit') }}" method="POST">
+                    @csrf
+                    <input class="blog1-sidebar-serch_input" type="search" placeholder="Search Blog Post" name="searchInput">
+                    <input name="" value="Submit" class="blog1-sidebar-serch-submit" type="submit">
+                </form>
             </div>
         </div>
     </div>
     <!--end sidebar box-->
 
-    <div class="col-md-12 nopadding">
-        <div class="blog1-sidebar-box">
-            <div class="text-box-inner">
-                <h5 class="uppercase dosis">Flickr Feed</h5>
-                <div class="clearfix"></div>
-                <ul id="basicuse" class="thumbs">
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!--end sidebar box-->
 
     <div class="col-md-12 nopadding">
         <div class="blog1-sidebar-box">

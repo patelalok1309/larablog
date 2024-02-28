@@ -165,8 +165,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8">
-                        @yield('content')
-
+                        <h2>No Blogs Found</h2>
                     </div>
                     <!--end left item-->
 

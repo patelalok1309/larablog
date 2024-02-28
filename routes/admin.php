@@ -21,7 +21,7 @@ Route::group(
     function () {
 
 
-        Route::view('', 'backpanel.dashboard.index')->name('backpanel.dashboard');
+        Route::get('', [UserController::class , 'dashboard'])->name('backpanel.dashboard');
 
 
         Route::group(['middleware' => ['role:admin']], function () {

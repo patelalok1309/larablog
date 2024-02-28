@@ -57,7 +57,7 @@
                         <p>Comments</p>
                     </a>
                 </li>
-                <li class="nav-item @if (Request::is('backpanel/site-settings')) active @endif" style="margin-bottom: 250px">
+                <li class="nav-item @if (Request::is('backpanel/site-settings')) active @endif" >
                     <a class="nav-link" href="{{ route('setting.index') }}">
                         <i class="material-icons">settings</i>
                         <p>Site Settings</p>
@@ -65,7 +65,7 @@
                 </li>
             @endhasrole
 
-            <li class="nav-item @if (Request::is('backpanel/post*')) active @endif">
+            <li class="nav-item @if (Request::is('backpanel/post*')) active @endif" style="margin-bottom: 250px">
                 <a class="nav-link" href="{{ route('post.index') }}">
                     <i class="material-icons">article</i>
                     <p>Posts</p>

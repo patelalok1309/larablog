@@ -4,9 +4,18 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserRequest;
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Post;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 use Spatie\Permission\Models\Role;
+
+use function PHPUnit\Framework\isNull;
 
 class UserController extends Controller
 {
@@ -50,7 +59,7 @@ class UserController extends Controller
         $userRoles = $user->getRoleNames();
         return view('backpanel.users.edit', compact('user'))
             ->with('AllRoles', $this->roles)
-            ->with('role', $userRoles[0]);
+            ->with('role', $user->getRoleNames()->first());
     }
 
     public function update(Request $req, User $user)
@@ -77,12 +86,14 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'User deleted successfully');
     }
 
-    public function registerUser(){
+    public function registerUser()
+    {
         return view('auth.register');
     }
 
 
-    public function storeUser(Request $req){
+    public function storeUser(Request $req)
+    {
         $user = User::create([
             "name" => $req->name,
             "email" => $req->email,
@@ -91,5 +102,70 @@ class UserController extends Controller
         $user->addMedia($req->avatar)->toMediaCollection('user_avatar');
         $user->assignRole('author');
         return redirect()->route('user.index')->with('success', $req->name . ' user created successfully');
+    }
+
+    public function registerWithGithub()
+    {
+        $githubUser = Socialite::driver('github')->user();
+
+        $user = User::where('email', $githubUser->email)->first();
+        if ($user == null) {
+            $user = User::create([
+                'name' => $githubUser->nickname,
+                'email' => $githubUser->email,
+                'password' => Hash::make('user@1234'),
+            ]);
+            $user->addMediaFromUrl($githubUser->picture)->toMediaCollection('user_avatar');
+            $user->assignRole('author');
+        }
+
+        Auth::login($user);
+
+        return redirect()->route('blog.home');
+    }
+
+
+    public function registerWithGoogle()
+    {
+        $googleUser = Socialite::driver('google')->user();
+
+        $user = User::where('email', $googleUser->email)->first();
+        if ($user == null) {
+            $user = User::create([
+                'github_id' => $googleUser->id,
+                'name' => $googleUser->name,
+                'email' => $googleUser->email,
+                'password' => Hash::make('user@1234'),
+                'github_token' => $googleUser->token,
+                'github_refresh_token' => $googleUser->refreshToken,
+            ]);
+            $user->addMediaFromUrl($googleUser->avatar)->toMediaCollection('user_avatar');
+            $user->assignRole('author');
+        }
+
+        Auth::login($user);
+
+        return redirect()->route('blog.home');
+    }
+
+    public function dashboard()
+    {
+        $users = User::all()->count();
+        $posts = Post::all()->count();
+        $tags = Tag::all()->count();
+        $categories = Category::all()->count();
+        $comments = Comment::all()->count();
+        $roles = Role::all()->count();
+        return view(
+            'backpanel.dashboard.index',
+            [
+                'users' => $users,
+                'posts' => $posts,
+                'tags' => $tags,
+                'categories' => $categories,
+                'comments' => $comments,
+                'roles' => $roles,
+            ]
+        );
     }
 }
